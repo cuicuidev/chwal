@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./dependencies.sh
+
 if [ -z "$1" ]; then
 	echo "Usage: $0 <wallpaper_path>"
 fi
