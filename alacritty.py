@@ -40,6 +40,7 @@ def main():
     if not beginning_line or not ending_line:
         print("Could not find beginning or ending line, appending to end of file")
         with open(TOML_CONFIG, 'a') as f:
+            f.write("\n")
             f.write(config)
     elif beginning_line and ending_line:
         print("Found beginning and ending line, replacing config")
@@ -48,7 +49,7 @@ def main():
 
         with open(TOML_CONFIG, 'w') as f:
             for i, line in enumerate(lines):
-                if i == beginning_line:
+                if i == beginning_line - 1:
                     f.write(config)
                 elif i >= beginning_line and i < ending_line:
                     continue
