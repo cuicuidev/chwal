@@ -34,6 +34,9 @@ def main():
     beginning_line = get_beginning_line()
     ending_line = get_ending_line()
 
+    print(f"Beginning line: {beginning_line}")
+    print(f"Ending line: {ending_line}")
+
     if not beginning_line or not ending_line:
         print("Could not find beginning or ending line, appending to end of file")
         with open(TOML_CONFIG, 'a') as f:
@@ -42,14 +45,16 @@ def main():
         print("Found beginning and ending line, replacing config")
         with open(TOML_CONFIG, 'r') as f:
             lines = f.readlines()
+
         with open(TOML_CONFIG, 'w') as f:
-            for line in lines:
-                if line == beginning_line:
+            for i, line in enumerate(lines):
+                if i == beginning_line:
                     f.write(config)
-                elif line == ending_line:
+                elif i >= beginning_line and i < ending_line:
                     continue
                 else:
                     f.write(line)
+
     else:
         raise Exception("One of beginning or ending line was found, but not the other")
         
@@ -59,13 +64,11 @@ def generate_colors_config(colors, normal_colors_range, bright_colors_range, col
     config += "[colors.normal]\n"
     for i in normal_colors_range:
         config += f"{color_names[i]} = \"{colors[i].strip()}\"\n"
-        print(i)
     config += "\n"
 
     config += "[colors.bright]\n"
     for i in bright_colors_range:
         config += f"{color_names[i-8]} = \"{colors[i].strip()}\"\n"
-        print(i)
     config += "\n"
 
     config += "[colors.cursor]\n"
