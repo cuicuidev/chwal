@@ -16,4 +16,5 @@ if pip3 freeze | grep -q 'pywal'; then
 	echo "Pywal is already installed"
 else
 	echo "A Pywal installation is required"
+	exit 1
 fi
